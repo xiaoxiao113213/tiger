@@ -1,0 +1,87 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.30
+    container_name: db
+    command: [
+      "--default-authentication-plugin=mysql_native_password",
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_0900_ai_ci",
+      "--sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES",
+      "--max_connections=1024",
+      "--lower_case_table_names=1",
+      "--default-time-zone=+8:00",
+      "--innodb-buffer-pool-size=128M"
+    ]
+    restart: always
+    volumes:
+      - ./dataDir:/var/lib/mysql
+      - ./init-tiger.sql:/docker-entrypoint-initdb.d/init-tiger.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: e35fr34#232%6y61weq!@d
+      TZ: Asia/Shanghai
+    ports:
+      - "13306:3306"
+    networks:
+      - tiger
+  tiger-java:
+    image: eclipse-temurin:17.0.8_7-jdk
+    restart: always
+    ports:
+      - "1083:1083"
+    volumes:
+      - ./workdir:/var/roubao/workdir
+      - ./mnt:/mnt
+    container_name: tiger-java
+    working_dir: /mnt
+    command:
+      - java
+      - -server
+      - -Xms512M
+      - -Xmx512M
+      - -XX:MaxGCPauseMillis=200
+      - -XX:MetaspaceSize=256M
+      - -XX:MaxMetaspaceSize=512M
+      - -jar
+      - app.jar
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE_NAME: tiger
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: e35fr34#232%6y61weq!@d
+      #      项目的工作目录  可通过上面的volumes进行挂载
+      BASE_DIR: /var/tiger/workdir
+      #      是否自动初始化sql  默认false
+      IF_AUTO_INIT_SQL: false
+    #    依赖db
+    depends_on:
+      - db
+    networks:
+      - tiger
+
+  web:
+    image: nginx:latest
+    container_name: web
+    restart: always
+    privileged: true
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./mnt:/mnt
+    depends_on:
+      - tiger-java
+      - db
+
+    networks:
+      - tiger
+
+networks:
+  tiger:
+    driver: bridge

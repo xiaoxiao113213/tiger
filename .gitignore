@@ -1,1 +1,6 @@
 /.idea/
+*app.jar
+
+/部署列表/**/mnt/html/
+/部署列表/**/mnt/ssl/
+/部署列表/0-0-1-Beta.zip
