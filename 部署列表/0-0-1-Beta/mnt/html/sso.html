@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link href="./scripts/message.min.css" rel="stylesheet">
+  <!-- your html -->
+  <!--  https://github.com/snwjas/Message.js-->
+  <script src="./scripts/message.min.js"></script>
+  <style>
+      body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-image: url('sso/background.jpg');
+          background-size: cover;
+          font-family: Arial, sans-serif;
+      }
+
+      form {
+          background-color: rgba(255, 255, 255, 0.8);
+          padding: 50px;
+          width: 300px;
+          border-radius: 5px;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-group {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+      }
+
+      .input-group label {
+          margin-right: 10px;
+          width: 70px;
+          height: 30px;
+          line-height: 30px;
+      }
+
+      .input-group input {
+          width: 230px; /* Adjusted width */
+          height: 30px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+      }
+
+      .input-group img {
+          width: 100px;
+          height: 30px;
+          margin-left: 10px;
+      }
+
+      input[type="submit"] {
+          width: 100px;
+          padding: 10px;
+          border-radius: 5px;
+          border: none;
+          color: #ffffff;
+          background-color: #007BFF;
+          cursor: pointer;
+          margin: 0 auto;
+          display: block;
+      }
+
+      .input-img img {
+          width: 100px;
+          height: 30px;
+      }
+
+      .input-img {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+      }
+
+      input[type="submit"]:hover {
+          background-color: #0056b3;
+      }
+  </style>
+</head>
+<body>
+<form>
+  <div class="input-group">
+    <label for="username">用户名:</label>
+    <input id="username" name="username" type="text">
+  </div>
+  <div class="input-group">
+    <label for="password">密码:</label>
+    <input id="password" name="password" type="password">
+  </div>
+  <div class="input-group">
+    <label for="captcha">验证码:</label>
+    <input id="captcha" name="captcha" type="text">
+  </div>
+  <div class="input-img">
+    <img alt="验证码" id="captcha-img" onclick="changeCaptcha()" src="">
+  </div>
+
+  <input onclick="submitLogin()" type="submit" value="登录">
+</form>
+<script>
+  var configs = {};
+  // configs 为配置参数，可省略
+
+  // const apiUrl = 'http://localhost:1083';
+  const apiUrl = '';
+  // const apiUrl = 'http://tiger.unquntea.com:81';
+
+  let imgId = '';
+  let ssoCode = '';
+  let ssoToken = localStorage.getItem('ssoToken');
+  let forwardUrl = '/';
+  // 获取浏览器地址栏中的参数
+  const urlParams = new URLSearchParams(window.location.search);
+  // 如果地址栏中有forward参数，就把这个参数的值赋值给forwardUrl
+  if (urlParams.has('forward')) {
+    forwardUrl = urlParams.get('forward');
+  }
+  //    如果ssoToken不为空，说明已经登录过，然后用这个ssoToken去请求用户信息
+  if (ssoToken) {
+    fetch(apiUrl + '/devops-server/sso/verifySsoToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token: ssoToken,
+      }),
+    }).then(response => response.json()).then(data => {
+      if (data.code === 1000) {
+        ssoCode = data.data.ssoCode;
+        ssoToken = data.data.ssoToken;
+        //     把ssoToken存储到localStorage中
+        localStorage.setItem('ssoToken', ssoToken);
+        turnForwardUrl();
+      } else {
+        Qmsg.info(data.msg, configs);
+        logout();
+      }
+    });
+  }
+
+
+  // 请求验证码的函数
+  async function getNewCaptcha() {
+    const response = await fetch(apiUrl + '/devops-server/sso/getValidateImg');
+    const data = await response.json();
+    imgId = data.data.imgId;
+    return 'data:image/gif;base64,' + data.data.imgBase64;
+  }
+
+  // 当页面加载完成后，获取新的验证码并显示在img元素中
+  window.onload = async function() {
+    document.getElementById('captcha-img').src = await getNewCaptcha();
+  };
+
+  async function changeCaptcha() {
+    document.getElementById('captcha-img').src = await getNewCaptcha();
+  }
+
+  //     提交登录
+  async function submitLogin() {
+    // 阻止表单的默认提交行为
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const code = document.getElementById('captcha').value;
+    const response = await fetch(apiUrl + '/devops-server/sso/loginByPasswd', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        code,
+        imgId,
+      }),
+    });
+    const data = await response.json();
+    console.log('返回结果', data);
+    if (data.code === 1000) {
+      Qmsg.info('登录成功', configs);
+      ssoCode = data.data.ssoCode;
+      ssoToken = data.data.ssoToken;
+      //     把ssoToken存储到localStorage中
+      localStorage.setItem('ssoToken', ssoToken);
+      //     跳转到forwardUrl
+      turnForwardUrl();
+    } else {
+      ssoCode = '';
+      ssoToken = '';
+      alert(data.msg);
+      document.getElementById('captcha-img').src = await getNewCaptcha();
+    }
+  }
+
+  //     退出登录
+  async function logout() {
+    localStorage.removeItem('ssoToken');
+    ssoCode = '';
+    ssoToken = '';
+  }
+
+  function turnForwardUrl() {
+    // 解析 forwardUrl 值  forward=http://localhost:8100/  加上?ssoCode=ssoCode
+    // 解析 forwardUrl 值  forward=http://localhost:8100/?other=w3erw  加上&ssoCode=ssoCode
+    // 解析 forwardUrl 值  forward=http://localhost:8100/?other=w3erw&ssoCode=ssoCode  替换上ssoCode=ssoCode 的新值
+    if (forwardUrl.indexOf('?') > -1) {
+      if (forwardUrl.indexOf('ssoCode') > -1) {
+        forwardUrl = forwardUrl.replace(/ssoCode=[^&]*/, 'ssoCode=' + ssoCode);
+      } else {
+        forwardUrl = forwardUrl + '&ssoCode=' + ssoCode;
+      }
+    } else {
+      forwardUrl = forwardUrl + '?ssoCode=' + ssoCode;
+    }
+    window.location.href = forwardUrl;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+import{v as n}from"./index-308ab40d.js";const t=function(t,o,e,f){"function"==typeof o&&"function"!=typeof e&&(f=e,e=o,o=null),n(t,o,(function(n,t){const o=t[t.length-1];return e(n,o?o.children.indexOf(n):null,o)}),f)};export{t as v};

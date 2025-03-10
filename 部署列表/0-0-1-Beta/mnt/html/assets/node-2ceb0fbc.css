@@ -1,0 +1,1 @@
+.my-node:hover{background-color:#f0f0f0;cursor:pointer}@keyframes shadowPulse{0%{box-shadow:0 0 20px #888}50%{box-shadow:0 0 #888}to{box-shadow:0 0 20px #888}}.mmm-content{animation:shadowPulse 1s infinite;transition:.4s linear all}

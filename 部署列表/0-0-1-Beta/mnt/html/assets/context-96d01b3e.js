@@ -1,0 +1,1 @@
+import{O as e,r as n}from"./index-52537ad8.js";const o={nodeClickFn:(e,n)=>{},pipelineOpenType:e.close},t=n.createContext(o),p=()=>n.useContext(t);export{t as PipelineContext,p as usePipelineContext};

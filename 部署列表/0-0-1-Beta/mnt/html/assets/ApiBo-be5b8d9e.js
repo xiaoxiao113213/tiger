@@ -1,0 +1,1 @@
+var e=(e=>(e[e.Public=0]="Public",e[e.DocSpace=1]="DocSpace",e[e.DocContent=2]="DocContent",e[e.ProcessFile=3]="ProcessFile",e[e.TempConvertFile=4]="TempConvertFile",e[e.Pipeline=5]="Pipeline",e[e.Chat=6]="Chat",e[e.Rili=7]="Rili",e[e.Task=8]="Task",e[e.Project=9]="Project",e[e.Machine=10]="Machine",e))(e||{});export{e as b};
