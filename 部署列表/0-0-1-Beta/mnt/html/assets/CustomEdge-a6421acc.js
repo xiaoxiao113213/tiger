@@ -1,1 +1,0 @@
-import{j as r}from"./index-1fe6dff8.js";import{j as t,k as e}from"./index-9cc62199.js";function s({id:s,sourceX:a,sourceY:o,targetX:i,targetY:n}){const[c]=e({sourceX:a,sourceY:o,targetX:i,targetY:n});return r.jsx(r.Fragment,{children:r.jsx(t,{id:s,path:c})})}export{s as default};

@@ -1,1 +1,0 @@
-import{j as o}from"./index-f2321b57.js";import{e as t,P as r}from"./index-da2797ee.js";function i(){const i=t((o=>`x: ${o.transform[0].toFixed(2)}, y: ${o.transform[1].toFixed(2)}, zoom: ${o.transform[2].toFixed(2)}`));return o.jsx(r,{position:"top-right",children:i})}export{i as default};

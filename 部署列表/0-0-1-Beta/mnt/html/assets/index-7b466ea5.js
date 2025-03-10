@@ -1,1 +1,0 @@
-import{j as e,aG as s}from"./index-f2321b57.js";const r=r=>{let a=r.avatar;return"1"===r.type?a="/icons/群聊.svg":"2"===r.type&&(a="/icons/应用聊天.svg"),e.jsx(s.Group,{shape:"circle",children:e.jsx(s,{className:"mmm-hover-pointer",style:{backgroundColor:"#6fb3f1",verticalAlign:"middle"},size:r.size??"large",src:a,children:r.nickName})})};export{r as I};

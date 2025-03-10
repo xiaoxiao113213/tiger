@@ -1,1 +1,0 @@
-import{g as e,j as i,U as s}from"./index-03adb9ee.js";const t=t=>{const a=e()?.fileToken??"",l=t.fileList.map((e=>({uid:e.fileKey,name:e.fileName,status:"done",url:e.fullPath+"?token="+a})));return i.jsx("div",{children:i.jsx(s,{action:"/upload.do",listType:"picture-card",disabled:!0,fileList:l})})};export{t as F};

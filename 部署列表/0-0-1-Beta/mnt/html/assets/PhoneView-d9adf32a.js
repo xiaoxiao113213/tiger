@@ -1,1 +1,0 @@
-import{j as e,I as a}from"./index-03adb9ee.js";const t=t=>{const{value:n,onChange:s}=t;let l=["",""];return n&&(l=n.split("-")),e.jsxs(e.Fragment,{children:[e.jsx(a,{value:l[0],onChange:e=>{s&&s(`${e.target.value}-${l[1]}`)}}),e.jsx(a,{onChange:e=>{s&&s(`${l[0]}-${e.target.value}`)},value:l[1]})]})};export{t as default};

@@ -1,1 +1,0 @@
-import{c as e}from"./index-308ab40d.js";const n=e(["break","delete","emphasis","footnote","footnoteReference","image","imageReference","inlineCode","link","linkReference","strong","text"]);export{n as p};

@@ -1,1 +1,0 @@
-import{j as n}from"./index-03adb9ee.js";import{B as e}from"./blocknote-react-7447cb1a.js";const o=e({type:"mention",propSchema:{user:{default:"Unknown"}},content:"none"},{render:e=>n.jsxs("span",{style:{backgroundColor:"#8400ff33"},children:["@",e.inlineContent.props.user]})});export{o as Mention};
