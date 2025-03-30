@@ -1,13 +1,17 @@
 * [主页](/)
 * [部署文档](zh-cn/%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3.md)
+
+* [即时通讯](zh-cn/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF.md)
+* [日历](zh-cn/%E6%97%A5%E5%8E%86/%E6%97%A5%E5%8E%86.md)
+* [任务](zh-cn/%E4%BB%BB%E5%8A%A1/%E4%BB%BB%E5%8A%A1.md)
+* [项目目录](zh-cn/%E9%A1%B9%E7%9B%AE/%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95.md)
+    * [项目](zh-cn/%E9%A1%B9%E7%9B%AE/%E9%A1%B9%E7%9B%AE.md)
+    * [工时](zh-cn/%E9%A1%B9%E7%9B%AE/%E5%B7%A5%E6%97%B6.md)
+    * [版本](zh-cn/%E9%A1%B9%E7%9B%AE/%E7%89%88%E6%9C%AC.md)
+    * [issues](zh-cn/%E9%A1%B9%E7%9B%AE/issues.md)
+
+
 * [流水线](zh-cn/%E6%B5%81%E6%B0%B4%E7%BA%BF.md)
-* [通讯](zh-cn/%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF.md)
-
-
-
-
-
-
 
 
 * [系统设置](zh-cn/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE.md)
