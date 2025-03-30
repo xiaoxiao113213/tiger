@@ -1,3 +1,51 @@
+# Tiger 功能模块
+[下个迭代计划](%E4%B8%8B%E4%B8%AA%E8%BF%AD%E4%BB%A3%E8%AE%A1%E5%88%92.md)
+- 通讯
+    - 即时通讯的功能
+    - 视频会议（设计中）
+    - 语音会议（设计中）
+- 日历
+    - 日历功能
+    - 日程安排
+- 任务
+    - 个人任务管理
+- 项目管理
+    - 项目
+    - 工时
+    - 版本
+    - issues
+- 知识库（功能待完善，可提需求）
+    - word在线
+    - excel在线
+- 审批
+    - 审批设置
+        - 可自定义表单字段
+    - 我的审批
+- CICD
+    - 流水线
+        - 流水线整体功能，可视化节点
+    - 插件
+    - 执行机
+- 跳板机/堡垒机
+    - 跳板机功能
+    - 远程连接
+    - 远程文件传输
+- 数据设计
+    - 数据库表设计
+    - 数据库表字段设计
+- AI (功能待扩展，可提需求)
+    - AI工作流
+    - AI聊天
+    - 模型管理
+- 系统设置
+    - 个人信息
+    - 角色管理
+    - 部门管理
+    - 应用管理
+    - 菜单管理
+    - 字典管理
+    - 系统参数配置
+
 # docker 容器部署
 
 ### 环境条件
@@ -14,7 +62,6 @@ github 下载链接
 ```shell
 curl -O https://github.com/xiaoxiao113213/tiger/releases/download/0.0.1.beta/0-0-1-Beta.zip
 ```
-
 
 ### 解压并启动
 
@@ -55,6 +102,7 @@ ssl 放置目录：0-0-1-Beta/mnt/ssl
 #     ssl_certificate "/mnt/ssl/tiger.unquntea.com.cer";  # 证书路径
 #     ssl_certificate_key "/mnt/ssl/tiger.unquntea.com.key";  # 证书密钥路径
 ```
+
 把注释去掉，修改证书路径 最终结果如下
 
 ```text
@@ -74,6 +122,7 @@ docker-compose up -d
 docker-compose restart tiger-web
 
 ```
+
 然后访问 https://[部署机器的IP] 即可
 
 
