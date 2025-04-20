@@ -1,3 +1,39 @@
+### 测试预览（轻点折腾）
+[http://123.56.17.62/](http://123.56.17.62/)
+```text
+
+账号：admin-devops
+密码：111111
+
+账号：小虎
+密码：111111
+
+```
+
+
+
+```bash
+pnpm install
+```
+
+### Start the Development Server
+
+Run the following command to start the development server:
+
+```bash
+pnpm dev
+```
+
+Visit [http://localhost:3002](http://localhost:3002) to view your application.
+
+### Build for Production
+
+Run the following command to build the production version:
+
+```bash
+pnpm build
+```
+
 # Tiger 功能模块
 
 [下个迭代计划](%E4%B8%8B%E4%B8%AA%E8%BF%AD%E4%BB%A3%E8%AE%A1%E5%88%92.md)
@@ -66,7 +102,7 @@
 github 下载链接
 
 ```shell
-curl -O https://github.com/xiaoxiao113213/tiger/releases/download/0.0.1.beta/0-0-1-Beta.zip
+wget https://github.com/xiaoxiao113213/tiger/releases/download/0.0.1.beta/0-0-1-Beta.zip
 ```
 
 ### 解压并启动
@@ -80,9 +116,13 @@ docker-compose up -d
 ### 访问
 
 ```text
-http://[部署机器的IP]:8080
+http://[部署机器的IP]:80
 账号：admin-devops
 密码：111111
+
+账号：小虎
+密码：111111
+
 ```
 
 ### 注意事项

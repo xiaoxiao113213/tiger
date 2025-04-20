@@ -1,0 +1,29 @@
+.my-node:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+
+/*.mmm-content:hover {*/
+/*    box-shadow: 0px 0px 20px #888888;*/
+/*}*/
+
+/*.mmm-content {*/
+/*    transition: 0.4s linear all;*/
+/*}*/
+@keyframes shadowPulse {
+    0% {
+        box-shadow: 0px 0px 20px #888888;
+    }
+    50% {
+        box-shadow: 0px 0px 0px #888888;
+    }
+    100% {
+        box-shadow: 0px 0px 20px #888888;
+    }
+}
+
+.mmm-content {
+    animation: shadowPulse 1s infinite;
+    transition: 0.4s linear all;
+}

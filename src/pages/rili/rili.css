@@ -1,0 +1,35 @@
+/* 设置全局滚动条宽度为 16px */
+/*::-webkit-scrollbar {*/
+/*    !*width: 16px !important; !* 垂直滚动条的宽度 *!*!*/
+/*    !*height: 16px !important; !* 水平滚动条的高度 *!*!*/
+/*    display: none;*/
+/*}*/
+
+/*!* 滚动条的滑块 *!*/
+/*::-webkit-scrollbar-thumb {*/
+/*    background-color: #888 !important; !* 自定义滑块的颜色 *!*/
+/*    border-radius: 8px !important; !* 设置滑块圆角 *!*/
+/*}*/
+
+/*!* 滚动条的轨道 *!*/
+/*::-webkit-scrollbar-track {*/
+/*    background-color: #f1f1f1 !important; !* 自定义滚动条轨道的背景颜色 *!*/
+/*}*/
+
+/*解决 标题和时间 上下列不一致的问题*/
+.custom-scrollbar ::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-scrollbar .rbc-time-view {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.custom-scrollbar .rbc-time-header.rbc-overflowing {
+    margin-right: 0 !important;
+}
+
+/*::-webkit-scrollbar {*/
+/*    display: none;*/
+/*}*/

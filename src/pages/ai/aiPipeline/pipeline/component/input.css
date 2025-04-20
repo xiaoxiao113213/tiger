@@ -1,0 +1,18 @@
+.variableModule {
+  width: 600px;
+}
+.variableModule :global .ant-input {
+  border: 1px solid #eceef1;
+  border-top: none;
+}
+.insertBtnBox {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  gap: 4px;
+  height: 32px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eceef1;
+  color: #0084FF;
+}
+/*# sourceMappingURL=input.css.map */

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Markdown to HTML</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div id="markdown-content"></div>
+
+<script>
+  // 异步加载Markdown文件
+  function loadMarkdownFile(filePath, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          callback(xhr.responseText);
+        } else {
+          console.error('Failed to load Markdown file: ' + filePath);
+        }
+      }
+    };
+    xhr.open('GET', filePath, true);
+    xhr.send();
+  }
+
+  // 将Markdown转换为HTML并插入页面
+  function renderMarkdownToHTML(markdownText) {
+    // 使用 marked.js 将 Markdown 转换为 HTML
+    var htmlContent = marked.parse(markdownText);
+    // 使用 highlight.js 高亮代码块
+    document.getElementById('markdown-content').innerHTML = htmlContent;
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  }
+
+  // Markdown文件路径
+  var markdownFilePath = 'globalFun.md';
+
+  // 异步加载Markdown文件并渲染为HTML
+  loadMarkdownFile(markdownFilePath, renderMarkdownToHTML);
+</script>
+</body>
+</html>

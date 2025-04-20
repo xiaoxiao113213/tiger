@@ -1,0 +1,14 @@
+.g6-minimap-container {
+    border: 1px solid #e2e2e2;
+}
+
+.g6-minimap-viewport {
+    border: 2px solid rgb(25, 128, 255);
+}
+
+.g6-component-tooltip {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0px 10px 24px 10px;
+    box-shadow: rgb(174, 174, 174) 0px 0px 10px;
+}
+

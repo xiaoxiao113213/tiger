@@ -1,0 +1,4 @@
+/* 设置 placeholder 的颜色 */
+.custom-placeholder ::placeholder {
+    color: blue; /* 设置为蓝色，可以根据需要更改 */
+}

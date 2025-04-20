@@ -1,0 +1,74 @@
+.App {
+    display: flex;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*height: 100vh;*/
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+.resizable {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.resizer {
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    position: absolute;
+    z-index: 1;
+}
+
+.resizer.top-left {
+    top: -5px;
+    left: -5px;
+    cursor: nwse-resize;
+}
+
+.resizer.top-right {
+    top: -5px;
+    right: -5px;
+    cursor: nesw-resize;
+}
+
+.resizer.bottom-left {
+    bottom: -5px;
+    left: -5px;
+    cursor: nesw-resize;
+}
+
+.resizer.bottom-right {
+    bottom: -5px;
+    right: -5px;
+    cursor: nwse-resize;
+}
+
+.resizer.top {
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: ns-resize;
+}
+
+.resizer.right {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: ew-resize;
+}
+
+.resizer.bottom {
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: ns-resize;
+}
+
+.resizer.left {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: ew-resize;
+}

@@ -1,0 +1,23 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+    overflow: hidden;
+}
+
+.univer-app-container-header {
+    /*让面的内容居左排布*/
+    justify-content: flex-start !important;
+}
+
+.univer-toolbar {
+    --display: flex !important;
+    --justify-content: flex-start !important;
+}
+

@@ -1,0 +1,51 @@
+/*
+自定义 所属部门的 表格样式
+*/
+
+/*.myLine {*/
+/*    display: flex;*/
+/*    white-space: nowrap;*/
+/*}*/
+
+/*.myLine .ant-form-item {*/
+/*    flex: 1;*/
+/*    width: 45%;*/
+/*    white-space: normal;*/
+/*}*/
+
+.myLine {
+    display: flex;
+}
+
+.myLine .ant-form-item {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.myLine .ant-form-item:last-child {
+    margin-right: 0;
+}
+
+.container {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px; /* 设置遮罩的高度为10px */
+    background-color: rgba(0, 0, 0, 0.05); /* 设置遮罩的透明度（这里是50%） */
+    /*pointer-events: none; !* 这样遮罩将不会阻碍鼠标事件传递给底层的内容 *!*/
+    border-radius: 5px; /* 设置正方形的四个角为圆形，半径为5px */
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-float-btn-default .ant-float-btn-body .ant-float-btn-content .ant-float-btn-description {
+    display: flex;
+    align-items: center;
+    line-height: 16px;
+    color: rgb(43, 135, 219);
+    font-size: 12px;
+}
+
