@@ -23,32 +23,30 @@ function App() {
     setUserMsg(msg);
     // 重置消息 防止下面的监听重复触发
     setUserMsg(DefaultUserMsg);
-
   };
-
 
   const handleOpen = () => {
     // console.log('WebSocket connection opened');
   };
   const handleMessage = (event) => {
     console.log('Received message:', event.data);
-    const msg = JSON.parse(event.data);
+    const msg: UserMsg = JSON.parse(event.data);
     setMsg(msg);
-    reloadUnreadTotal();
-    setChat((currentChat) => {
-      if (!currentChat) {
-        console.log('您有一条新消息!!', chatPath, event.data);
-        const img = '/icons/聊天.svg';
-        const text = `您有一条新消息!!`;
-        const notification = new Notification('消息列表', { body: text, icon: img });
-        setTimeout(() => {
-          notification.close();
-        }, 5000);
-      }
-      return currentChat;
-    });
-
-
+    if (msg.type === 1) {
+      reloadUnreadTotal();
+      setChat((currentChat) => {
+        if (!currentChat) {
+          console.log('您有一条新消息!!', chatPath, event.data);
+          const img = '/icons/聊天.svg';
+          const text = `您有一条新消息!!`;
+          const notification = new Notification('消息列表', { body: text, icon: img });
+          setTimeout(() => {
+            notification.close();
+          }, 5000);
+        }
+        return currentChat;
+      });
+    }
   };
 
   const handleClose = () => {
@@ -62,9 +60,10 @@ function App() {
   const getWsPrefix = () => {
     const baseApi = import.meta.env.VITE_APP_BASE_API;
     if (baseApi && baseApi.length > 0) {
-      return import.meta.env.VITE_APP_BASE_API
-        .replace('http://', 'ws://')
-        .replace('https://', 'wss://');
+      return import.meta.env.VITE_APP_BASE_API.replace('http://', 'ws://').replace(
+        'https://',
+        'wss://',
+      );
     } else {
       return (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host;
     }
@@ -79,7 +78,6 @@ function App() {
     onClose: handleClose,
     onError: handleError,
   });
-
 
   const reloadUnreadTotal = () => {
     getTotalUnReadApi().then((res) => {
@@ -99,7 +97,9 @@ function App() {
       if (result === 'granted') {
         console.log('通知权限已授予');
       } else if (result === 'denied') {
-        message.error('您已拒绝通知权限。请点击浏览器地址栏左侧的锁图标（🔒），然后在“通知”设置中选择“允许”，并刷新页面。必须https哦');
+        message.error(
+          '您已拒绝通知权限。请点击浏览器地址栏左侧的锁图标（🔒），然后在“通知”设置中选择“允许”，并刷新页面。必须https哦',
+        );
       }
     });
   }, []);
@@ -115,11 +115,11 @@ function App() {
           <AppContext.Provider value={{ userMsg, setChat }}>
             <Router />
           </AppContext.Provider>
-          {!chat &&
+          {!chat && (
             <FloatButton.Group shape="circle" style={{ marginBottom: '100px' }}>
               <FloatButton badge={{ count: unreadNum }} icon={<MessageTwoTone />} />
             </FloatButton.Group>
-          }
+          )}
         </MotionLazy>
       </AntdApp>
     </AntdConfig>

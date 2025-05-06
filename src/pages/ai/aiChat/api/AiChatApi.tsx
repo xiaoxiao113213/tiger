@@ -1,5 +1,6 @@
 import apiClient from '@/api/apiClient.ts';
 import { Page, Rst } from '@/utils/baseBo.ts';
+import { AiChatMsgDetailVo } from '@/pages/ai/aiChat/api/AiChatMsgApi.tsx';
 
 const base = '/devops-server';
 
@@ -19,6 +20,14 @@ export async function aiChatDeleteApi(data: { aiChatId: number }) {
 export async function aiChatGetOneApi(data: { aiChatId: number }) {
   return apiClient.post<Rst<AiChatDetailVo>>({ url: `${base}/aiChat/getOne`, data });
 }
+// 查询详情
+export async function getSseStatuspi(data: { aiChatId: number }) {
+  return apiClient.post<Rst<{
+    aiChatId: number;
+    roleStatus: number; //角色对话的状态 0未开始 1进行中 2成功 3失败
+    lastMsg: AiChatMsgDetailVo;
+  }>>({ url: `${base}/aiChat/getSseStatus`, data });
+}
 
 // page
 export async function aiChatPageApi(data: AiChatDetailVo) {
@@ -28,6 +37,7 @@ export async function aiChatPageApi(data: AiChatDetailVo) {
 export async function aiChatAllApi(data: AiChatDetailVo) {
   return apiClient.post<Rst<AiChatDetailVo[]>>({ url: `${base}/aiChat/getAll`, data });
 }
+
 export async function addModelChatMsg(data: {
   aiChatId: number;
   type: string;
@@ -40,6 +50,7 @@ export async function addModelChatMsg(data: {
 export type AiChatDetailVo = {
   aiChatId: number;
   type: string;
+  roleStatus: number; //角色对话的状态 0未开始 1进行中 2成功 3失败
   createBy: number;
   createTime: string;
   updateBy: number;
@@ -48,4 +59,12 @@ export type AiChatDetailVo = {
   sort: number;
   remarks: string;
   title: string;
+  userList: AiChatUserDetailVo[];
+};
+
+export type AiChatUserDetailVo = {
+  aiChatUserId: number;
+  aiChatId: number;
+  bizType: string; // 用户还是大模型  User   Model
+  roleName: string;
 };

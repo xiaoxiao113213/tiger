@@ -4,23 +4,21 @@ import { AiChatDetailVo, aiChatSaveApi } from '@/pages/ai/aiChat/api/AiChatApi.t
 import ChatModelDic from '@/components/Dic/ChatModelDic.ts';
 import { aiPipelineAllApi } from '@/pages/ai/aiPipeline/api/api.tsx';
 import { AiPipelineDetailVo } from '@/pages/ai/aiPipeline/api/ApiBo.ts';
+import AddChatRole from '@/pages/ai/aiChat/addChatRole.tsx';
 
-
-const AddChat = (props: {
-  callback: (chat: AiChatDetailVo) => void;
-}) => {
+const AddChat = (props: { callback: (chat: AiChatDetailVo) => void }) => {
   const [formRef] = Form.useForm<AiChatDetailVo>();
   const { ChatModelList } = ChatModelDic({ type: '文本生成' });
   const [aiPipelineList, setAiPipelineList] = useState<AiPipelineDetailVo[]>();
   const [type, setType] = useState('Model');
   const [audioType, setAudioType] = useState();
+  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     aiPipelineAllApi({}).then((res) => {
       setAiPipelineList(res.data);
     });
   }, []);
-
 
   const add = async () => {
     const isPass = await formRef.validateFields().catch(() => false);
@@ -32,17 +30,15 @@ const AddChat = (props: {
     livePortrait.livePortraitMouthMoveStrength = values.livePortraitMouthMoveStrength || 1;
     livePortrait.livePortraitPasteBack = values.livePortraitPasteBack || true;
     values.livePortrait = livePortrait;
+    values.userList = userList
+
     const rst = await aiChatSaveApi(values);
     props.callback(rst.data);
   };
 
   return (
     <div>
-      <Form
-        initialValues={{ type: 'Model' }}
-        autoComplete="off"
-        form={formRef}
-      >
+      <Form initialValues={{ type: 'Model' }} autoComplete="off" form={formRef}>
         <Form.Item<AiChatDetailVo>
           label="标题"
           name="title"
@@ -56,20 +52,20 @@ const AddChat = (props: {
           name="type"
           rules={[{ required: true, message: '请选择类型' }]}
         >
-          <Radio.Group onChange={
-            (e) => {
+          <Radio.Group
+            onChange={(e) => {
               setType(e.target.value);
-            }
-          }>
+            }}
+          >
             <Radio value={'Model'}>大模型</Radio>
-            <Radio value={'Pipeline'}>流水线</Radio>
-            <Radio value={'Audio'}>语音合成</Radio>
-            <Radio value={'LivePortrait'}>灵动人像</Radio>
-            <Radio value={'Role'} disabled={true}>多角色</Radio>
+            {/*<Radio value={'Pipeline'}>流水线</Radio>*/}
+            {/*<Radio value={'Audio'}>语音合成</Radio>*/}
+            {/*<Radio value={'LivePortrait'}>灵动人像</Radio>*/}
+            <Radio value={'Role'}>多角色</Radio>
           </Radio.Group>
         </Form.Item>
 
-        {type === 'Model' &&
+        {type === 'Model' && (
           <>
             <Form.Item<AiChatDetailVo>
               label="模型"
@@ -78,32 +74,35 @@ const AddChat = (props: {
             >
               <Select options={ChatModelList} />
             </Form.Item>
-            <Form.Item<AiChatDetailVo>
-              label="系统提示词"
-              name="systemPrompt"
-            >
-              <Input.TextArea showCount maxLength={2000} allowClear placeholder={'请输出系统提示词'}
-                              autoSize={{ minRows: 3, maxRows: 50 }}
+            <Form.Item<AiChatDetailVo> label="系统提示词" name="systemPrompt">
+              <Input.TextArea
+                showCount
+                maxLength={2000}
+                allowClear
+                placeholder={'请输出系统提示词'}
+                autoSize={{ minRows: 3, maxRows: 50 }}
               />
             </Form.Item>
           </>
-        }
+        )}
 
-        {
-          type === 'Pipeline' &&
-          <Form.Item<AiChatDetailVo>
-            label="流水线"
-            name="aiPipelineId"
-            rules={[{ required: true, message: '流水线需要必选' }]}
-          >
-            <Select options={aiPipelineList?.map((item) => {
-              return { label: item.name, value: item.aiPipelineId };
-            })} />
-          </Form.Item>
-        }
+        {type === 'Pipeline' && (
+          <>
+            <Form.Item<AiChatDetailVo>
+              label="流水线"
+              name="aiPipelineId"
+              rules={[{ required: true, message: '流水线需要必选' }]}
+            >
+              <Select
+                options={aiPipelineList?.map((item) => {
+                  return { label: item.name, value: item.aiPipelineId };
+                })}
+              />
+            </Form.Item>
+          </>
+        )}
 
-        {
-          (type === 'Audio' || type == 'LivePortrait') &&
+        {(type === 'Audio' || type == 'LivePortrait') && (
           <>
             <Form.Item<AiChatDetailVo>
               label="音频类型"
@@ -120,25 +119,19 @@ const AddChat = (props: {
                 }}
               />
             </Form.Item>
-            {audioType &&
+            {audioType && (
               <Form.Item<AiChatDetailVo>
                 label="音色选择"
                 name="voice"
                 rules={[{ required: true, message: '必选' }]}
               >
-                {
-                  audioType === 'CosyVoice' &&
-                  <Select options={CosyVoice} />
-                }
-                {
-                  audioType === 'Sambert' &&
-                  <Select options={SambertVoice} />
-                }
+                {audioType === 'CosyVoice' && <Select options={CosyVoice} />}
+                {audioType === 'Sambert' && <Select options={SambertVoice} />}
               </Form.Item>
-            }
+            )}
           </>
-        }
-        {type === 'LivePortrait' &&
+        )}
+        {type === 'LivePortrait' && (
           <>
             <p style={{ color: 'red', marginBottom: '10px' }}>
               语音合成模型，支持灵动人像功能，可实现人像动态表情、语音合成、语音转文字等功能。
@@ -173,7 +166,9 @@ const AddChat = (props: {
               name="livePortraitMouthMoveStrength"
               rules={[{ required: true }]}
               initialValue={1}
-              tooltip={'嘴部动作的幅度大小，可设值为0-1.5，值越大嘴型越大。若设为0则嘴部无动作。默认值为1。'}
+              tooltip={
+                '嘴部动作的幅度大小，可设值为0-1.5，值越大嘴型越大。若设为0则嘴部无动作。默认值为1。'
+              }
             >
               <InputNumber min={0} max={1.5} step={0.1} precision={1} />
             </Form.Item>
@@ -182,7 +177,9 @@ const AddChat = (props: {
               name="livePortraitPasteBack"
               rules={[{ required: true }]}
               initialValue={true}
-              tooltip={'生成的人脸是否贴回原图，可设值为是或否。若设为否则仅输出生成的人脸，忽略人物身体。默认值为是'}
+              tooltip={
+                '生成的人脸是否贴回原图，可设值为是或否。若设为否则仅输出生成的人脸，忽略人物身体。默认值为是'
+              }
             >
               <Radio.Group>
                 <Radio value={true}>是</Radio>
@@ -190,9 +187,23 @@ const AddChat = (props: {
               </Radio.Group>
             </Form.Item>
           </>
+        )}
 
-        }
-
+        {type === 'Role' && (
+          <>
+            <Form.Item<AiChatDetailVo>
+              label="案情背景"
+              name="remarks"
+              rules={[{ required: true }]}
+            >
+              <Input.TextArea autoSize={{minRows: 3, maxRows: 8}} />
+            </Form.Item>
+            <AddChatRole
+              callback={(userList1) => setUserList(userList1)}
+              userList={userList}
+            ></AddChatRole>
+          </>
+        )}
 
         <Form.Item label={null}>
           <Button type="primary" onClick={add}>
@@ -267,6 +278,5 @@ export const SambertVoice = [
   { label: 'Brian', value: 'sambert-brian-v1' },
   { label: 'Waan', value: 'sambert-waan-v1' },
 ];
-
 
 export default AddChat;

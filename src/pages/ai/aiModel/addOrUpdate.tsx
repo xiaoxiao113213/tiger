@@ -6,12 +6,11 @@ import { OperateEnum } from '@/utils/enum.ts';
 import { getNullBo } from '@/utils/utils.ts';
 import { Rst } from '@/utils/baseBo.ts';
 
-
 type Props = {
-  detailId: number
-  operateEnum: OperateEnum
-  setAddOrUpdateModalFn: React.Dispatch<React.SetStateAction<OperateEnum>>,
-  reloadTable: () => void
+  detailId: number;
+  operateEnum: OperateEnum;
+  setAddOrUpdateModalFn: React.Dispatch<React.SetStateAction<OperateEnum>>;
+  reloadTable: () => void;
 };
 const AddOrUpdate = (props: Props) => {
   const [formRef] = Form.useForm<AiModelDetailVo>();
@@ -28,7 +27,6 @@ const AddOrUpdate = (props: Props) => {
   };
 
   const saveFn = async () => {
-
     const isPass = await formRef.validateFields().catch(() => false);
     if (!isPass) return;
 
@@ -43,49 +41,45 @@ const AddOrUpdate = (props: Props) => {
     message.success(res.msg);
     props.reloadTable();
     props.setAddOrUpdateModalFn(OperateEnum.close);
-
   };
 
   const closeModal = () => {
     props.setAddOrUpdateModalFn(OperateEnum.close);
   };
 
-
   useEffect(() => {
     initMyDataFn();
-    return () => {
-    };
+    return () => {};
   }, []); // 第二个参数表示依赖项
-
 
   return (
     <div>
-      <Form form={formRef}
-            labelCol={{ flex: '10%' }}
-            wrapperCol={{ flex: '90%' }}>
+      <Form form={formRef} labelCol={{ flex: '20%' }} >
         <Form.Item label="所属平台" name="belong" rules={[{ required: true }]}>
-          <Select options={
-            [
+          <Select
+            options={[
               { label: '通义千问', value: '通义千问' },
               { label: 'deepseek', value: 'deepseek' },
-            ]
-          } />
+              { label: 'ollama', value: 'ollama' },
+            ]}
+          />
         </Form.Item>
         <Form.Item label="模型类型" name="type" rules={[{ required: true }]}>
-          <Select options={[
-            { label: '文本生成', value: '文本生成' },
-            { label: '视频理解', value: '视频理解' },
-            { label: '视频生成', value: '视频生成' },
-            { label: '图片处理', value: '图片处理' },
-            { label: '图片理解', value: '图片理解' },
-            { label: '图片生成', value: '图片生成' },
-            { label: '向量模型', value: '向量模型' },
-            { label: '语音合成', value: '语音合成' },
-            { label: '语音识别', value: '语音识别' },
-          ]}
-                  mode={'multiple'}
-                  maxLength={1}
-                  maxCount={1}
+          <Select
+            options={[
+              { label: '文本生成', value: '文本生成' },
+              { label: '视频理解', value: '视频理解' },
+              { label: '视频生成', value: '视频生成' },
+              { label: '图片处理', value: '图片处理' },
+              { label: '图片理解', value: '图片理解' },
+              { label: '图片生成', value: '图片生成' },
+              { label: '向量模型', value: '向量模型' },
+              { label: '语音合成', value: '语音合成' },
+              { label: '语音识别', value: '语音识别' },
+            ]}
+            mode={'multiple'}
+            // maxLength={1}
+            // maxCount={1}
           />
         </Form.Item>
 
@@ -98,12 +92,12 @@ const AddOrUpdate = (props: Props) => {
         <Form.Item label="上下文长度" name="contextLength" rules={[{ required: true }]}>
           <InputNumber placeholder="请输入" />
         </Form.Item>
-        <Form.Item label="最大输入量" name="maxInput" rules={[{ required: true }]}>
-          <InputNumber placeholder="请输入" />
-        </Form.Item>
-        <Form.Item label="最大输出量" name="maxOutput" rules={[{ required: true }]}>
-          <InputNumber placeholder="请输入" />
-        </Form.Item>
+        {/*<Form.Item label="最大输入量" name="maxInput" rules={[{ required: true }]}>*/}
+        {/*  <InputNumber placeholder="请输入" />*/}
+        {/*</Form.Item>*/}
+        {/*<Form.Item label="最大输出量" name="maxOutput" rules={[{ required: true }]}>*/}
+        {/*  <InputNumber placeholder="请输入" />*/}
+        {/*</Form.Item>*/}
         <Form.Item label="排序" name="sort" rules={[{ required: false }]}>
           <InputNumber placeholder="请输入" />
         </Form.Item>
